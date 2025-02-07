@@ -15,11 +15,16 @@ export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: nu
     if (tabela === 'eventos') {
         try {
             const result = await db.run(deletEvent, [id])
-            if(result.changes === 0) {
-                console.log(`Evento com ID: ${id} não existe.`);
+
+            if (result.changes === 0) {
+                console.log(`Evento com ID ${id} não existe.`);
                 return
             }
-            console.log('Evento de ID ${id} deletado com sucesso.');
+
+            await db.run('DELETE FROM sqlite_sequence WHERE name = "eventos"');
+
+            console.log(`Evento de ID ${result.lastID} deletado com sucesso.`);
+
         } catch (erro) {
             console.log('Erro ao deletar evento: ', erro);
         } finally {
@@ -29,12 +34,17 @@ export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: nu
 
     } else if (tabela === 'usuarios') {
         try {
-           const result = await db.run(deletUsuario, [id])
-           if(result.changes === 0) {
-            console.log(`Usuário com ID: ${id} não existe.`);
-            return
-           } 
-           console.log(`Usuario de ID ${id} deletado com sucesso.`);
+            const result = await db.run(deletUsuario, [id])
+
+            if (result.changes === 0) {
+                console.log(`Usuário com ID ${id} não existe.`);
+                return
+            }
+
+            await db.run('DELETE FROM sqlite_sequence WHERE name = "usuarios"');
+
+            console.log(`Usuario de ID ${result.lastID} deletado com sucesso.`);
+
         } catch (erro) {
             console.log('Erro ao deletar usuário: ', erro);
         } finally {
