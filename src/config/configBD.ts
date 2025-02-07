@@ -6,7 +6,6 @@ export async function conectandoAoBanco(): Promise<Database> {
         filename: './database/eventos.db',
         driver: sqlite3.Database
      })
-
-   console.log('Conectado ao Banco de dados.');
+     
    return db
 }

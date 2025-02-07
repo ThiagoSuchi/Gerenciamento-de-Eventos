@@ -35,8 +35,10 @@ export async function criarTabelas(): Promise<void> {
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
             )    
         `)
-
+        
+        console.log('Tabelas criadas com sucesso.');
+        
     } catch (err) {
-        console.log(err);
+        console.log('Erro ao criar tabelas: ',err);
     }
 }
