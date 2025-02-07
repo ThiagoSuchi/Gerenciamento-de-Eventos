@@ -17,7 +17,7 @@ export async function listarUserOuEventoPorID(tabela: 'eventos' | 'usuarios', id
 
     if (tabela === 'eventos') {
         try {
-            const result = await db.all(listarEventId, [id]);
+            const result = await db.get(listarEventId, [id]);
 
             if (result.length === 0) {
                 console.log(`Evento com ID ${id} não existe.`);
@@ -35,7 +35,7 @@ export async function listarUserOuEventoPorID(tabela: 'eventos' | 'usuarios', id
 
     } else if (tabela === 'usuarios') {
         try {
-            const result = await db.all(listarUserId, [id]);
+            const result = await db.get(listarUserId, [id]);
 
             if (result.length === 0) {
                 console.log(`Usuário com ID ${id} não existe.`);

@@ -1,12 +1,18 @@
 import { conectandoAoBanco } from "../config/configBD";
 import { Usuarios } from "../models/usuarios";
 import { validacao } from "../utils/validUsuario";
+import { usuarioExistente } from "../utils/verificacao";
 
 export async function inserirUsuario(usuario: Usuarios): Promise<void> {
     const {nome, email, senha} = usuario;
     const valid = validacao.safeParse({nome, email, senha});
     const db = await conectandoAoBanco();
     
+    if(await usuarioExistente(usuario.nome, usuario.email)) {
+        console.log('Este usuário ja está cadastrado.');
+        return
+    }
+
     if(!valid.success) {
         console.log('Erro na validação: ', valid.error.format());
         return;
