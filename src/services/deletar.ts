@@ -7,7 +7,6 @@ export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: nu
         DELETE FROM eventos
         WHERE id = ?
     `
-
     const deletUsuario = `
         DELETE FROM usuarios
         WHERE id = ?

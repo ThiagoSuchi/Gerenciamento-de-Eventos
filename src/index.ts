@@ -1,5 +1,6 @@
 import { criarTabelas } from "./services/criarTabelas";
 import { deletarUserOuEvento } from "./services/deletar";
+import { listarUserOuEventoPorID } from "./services/listarPorID";
 import { listarUsuariosOuEventos } from "./services/listarTodos";
 import { cadastrarUsuario } from "./utils/cadastrarUsuario";
 import { registrarEventos } from "./utils/registrarEvento";
@@ -9,5 +10,6 @@ import { registrarEventos } from "./utils/registrarEvento";
 // criarTabelas();
 // cadastrarUsuario('Maria Gimenez', 'majuzinha@gmail.com', 'mariazinha123321@#');
 // registrarEventos('Festival Literário Dom Bosco', '19/03/2025', 2)
-// deletarUserOuEvento('eventos', 4)
+// deletarUserOuEvento('eventos', 10)
 // listarUsuariosOuEventos("usuarios");
+// listarUserOuEventoPorID("eventos", 2)
