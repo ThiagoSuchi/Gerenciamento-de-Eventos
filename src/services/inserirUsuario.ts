@@ -7,7 +7,7 @@ export async function inserirUsuario(usuario: Usuarios): Promise<void> {
     const {nome, email, senha} = usuario;
     const valid = validacao.safeParse({nome, email, senha});
     const db = await conectandoAoBanco();
-    
+
     if(await usuarioExistente(usuario.nome, usuario.email)) {
         console.log('Este usuário ja está cadastrado.');
         return

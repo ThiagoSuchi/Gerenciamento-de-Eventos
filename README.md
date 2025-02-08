@@ -25,7 +25,6 @@ Este é um sistema simples de gerenciamento de eventos utilizando **Node.js**, *
 - **TypeScript**
 - **SQLite** (banco de dados leve e embutido)
 - **Zod** (para validação de dados)
-- **Bcrypt** (para hash de senhas)
 - **SQLite3** (para interação com o banco de dados)
 
 ## 🚀 Como Executar o Projeto
