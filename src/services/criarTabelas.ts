@@ -29,10 +29,8 @@ export async function criarTabelas(): Promise<void> {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 acao TEXT NOT NULL,
                 tabela_afetada TEXT NOT NULL,
-                registro INTEGER NOT NULL,
-                usuario_id INTEGER NOT NULL,
-                data_hora DATETIME DEFAULT CURRENT_TIMESTEMP,
-                FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
+                item_afetado INTEGER NOT NULL,
+                data_hora DATETIME DEFAULT CURRENT_TIMESTAMP
             )    
         `)
         

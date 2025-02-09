@@ -23,7 +23,11 @@ export async function inserirUsuario(usuario: Usuarios): Promise<void> {
         VALUES (?,?,?)
     `
     try {
-        await db.run(query, [usuario.nome, usuario.email, usuario.senha, usuario.id])
+        const result = await db.run(query, [usuario.nome, usuario.email, usuario.senha, usuario.id])
+        const userID = result.lastID
+
+        await db.run(`INSERT INTO logs(acao, tabela_afetada, item_afetado) VALUES(?,?,?)`, ['insert', 'usuarios', userID]);
+        
         console.log(`Usuário cadastrado com sucesso.`);
     } catch (err) {
         console.log(`Erro ao cadastrar um novo usuário: ${err}`);

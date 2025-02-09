@@ -24,11 +24,13 @@ export async function alterUsuario(id: number, nome: string, email: string, senh
 
     try {
         const result = await db.run(query, [nome, email, senha, id])
-
+        
         if (result.changes === 0) {
             console.log('Este usuário não existe, para alterar escolha um usuário existente.');
             return;
         }
+        
+        await db.run(`INSERT INTO logs(acao, tabela_afetada, item_afetado) VALUES(?,?,?)`, ['update', 'usuarios', id]);
 
         console.log(`Usuário de ID ${id} alterado com sucesso.`);
     } catch (erro) {
