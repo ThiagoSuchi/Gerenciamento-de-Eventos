@@ -18,7 +18,7 @@ Este é um sistema simples de gerenciamento de eventos utilizando **Node.js**, *
 
 - **Registro de Logs**
   - Registrar ações no banco de dados, incluindo inserções, alterações e exclusões
-  - Armazenar informações sobre qual usuário executou a ação e em qual data/hora
+  - Armazenar informações sobre ação, a tabela afetada e em qual data/hora
 
 ## 🛠 Tecnologias Utilizadas
 - **Node.js**
