@@ -1,6 +1,6 @@
 import { conectandoAoBanco } from "../config/configBD";
 import { Evento } from "../models/evento";
-import { validacaoData } from "../utils/validData";
+import { validacaoData } from "../validation/validData";
 
 export async function inserirEvento(evento: Evento): Promise<void> {
     const db = await conectandoAoBanco();
@@ -12,11 +12,7 @@ export async function inserirEvento(evento: Evento): Promise<void> {
         VALUES (?,?,?)
     `
     try {
-        const result = await db.run(query, [evento.nome, evento.data, evento.usuarioResponsavel, evento.id])
-        const eventID = result.lastID
-
-        await db.run(`INSERT INTO logs(acao, tabela_afetada, item_afetado) VALUES(?,?,?)`, ['insert', 'eventos', eventID]);
-        
+        await db.run(query, [evento.nome, evento.data, evento.usuarioResponsavel, evento.id])
         console.log(`Evento registrado.`);
     } catch (err) {
         console.log(`Erro ao registrar o evento: ${err}`);

@@ -1,5 +1,5 @@
 import { conectandoAoBanco } from "../config/configBD";
-import { validacao } from "../utils/validUsuario";
+import { validacao } from "../validation/validUsuario";
 import { usuarioExistente } from "../utils/verificacao";
 
 export async function alterUsuario(id: number, nome: string, email: string, senha: string): Promise<void> {
@@ -29,8 +29,6 @@ export async function alterUsuario(id: number, nome: string, email: string, senh
             console.log('Este usuário não existe, para alterar escolha um usuário existente.');
             return;
         }
-        
-        await db.run(`INSERT INTO logs(acao, tabela_afetada, item_afetado) VALUES(?,?,?)`, ['update', 'usuarios', id]);
 
         console.log(`Usuário de ID ${id} alterado com sucesso.`);
     } catch (erro) {

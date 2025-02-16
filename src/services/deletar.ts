@@ -20,7 +20,6 @@ export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: nu
                 return
             }
 
-            await db.run(`INSERT INTO logs(acao, tabela_afetada, item_afetado) VALUES(?,?,?)`, ['delete', tabela, id]);
             await db.run('DELETE FROM sqlite_sequence WHERE name = "eventos"');
 
             console.log(`Evento de ID ${result.lastID} deletado com sucesso.`);

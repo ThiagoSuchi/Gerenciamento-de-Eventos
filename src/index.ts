@@ -10,9 +10,9 @@ import { registrarEventos } from "./utils/registrarEvento";
 
 // criarTabelas();
 // cadastrarUsuario('Maria Gimenez', 'majuzinha@gmail.com', 'mariazinha123321@#');
-// registrarEventos('Festival Literário Dom Bosco', '19/03/2025', 1)
+ registrarEventos('Festival Literário Dom Bosco', '19/03/2025', 1)
 // deletarUserOuEvento('eventos', 3)
 // listarUsuariosOuEventos("eventos");
 // listarUserOuEventoPorID("eventos", 2)
 // alterUsuario(1, 'Gabriel Almeida', 'almeida@gmail.com', 'gabigol33445566@');
- alterEvento(1, 'Festa Junina', '21/10/2025')
+// alterEvento(1, 'Festa Junina', '21/10/2025')
