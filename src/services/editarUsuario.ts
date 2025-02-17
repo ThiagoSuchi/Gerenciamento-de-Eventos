@@ -1,10 +1,10 @@
 import { conectandoAoBanco } from "../config/configBD";
-import { validacao } from "../validation/validUsuario";
+import { validacaoUser } from "../validation/validUsuario";
 import { usuarioExistente } from "../utils/verificacao";
 
 export async function alterUsuario(id: number, nome: string, email: string, senha: string): Promise<void> {
     const db = await conectandoAoBanco()
-    const valid = validacao.safeParse({ nome, email, senha });
+    const valid = validacaoUser.safeParse({ nome, email, senha });
 
     if(await usuarioExistente(nome, email)) {
         console.log('Nenhuma alteração foi feita neste usuário, pois seu nome ou email ja são cadastrados');

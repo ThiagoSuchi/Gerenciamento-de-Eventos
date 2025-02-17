@@ -1,11 +1,11 @@
 import { conectandoAoBanco } from "../config/configBD";
 import { Usuarios } from "../models/usuarios";
-import { validacao } from "../validation/validUsuario";
+import { validacaoUser } from "../validation/validUsuario";
 import { usuarioExistente } from "../utils/verificacao";
 
 export async function inserirUsuario(usuario: Usuarios): Promise<void> {
     const {nome, email, senha} = usuario;
-    const valid = validacao.safeParse({nome, email, senha});
+    const valid = validacaoUser.safeParse({nome, email, senha});
     const db = await conectandoAoBanco();
 
     if(await usuarioExistente(usuario.nome, usuario.email)) {

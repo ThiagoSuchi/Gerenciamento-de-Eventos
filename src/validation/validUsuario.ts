@@ -1,6 +1,6 @@
 import zod from 'zod';
 
-export const validacao = zod.object({
+export const validacaoUser = zod.object({
     nome: zod.string().min(4, 'O nome deve conter no mínimo 4 caracteres.'),
     email: zod.string().email('Email inválido.'),
     senha: zod.string()

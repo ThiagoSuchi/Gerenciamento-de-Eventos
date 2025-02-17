@@ -23,16 +23,6 @@ export async function criarTabelas(): Promise<void> {
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
             )
         `)
-
-        await db.exec(`
-            CREATE TABLE IF NOT EXISTS logs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                acao TEXT NOT NULL,
-                tabela_afetada TEXT NOT NULL,
-                item_afetado INTEGER NOT NULL,
-                data_hora DATETIME DEFAULT CURRENT_TIMESTAMP
-            )    
-        `)
         
         console.log('Tabelas criadas com sucesso.');
         
