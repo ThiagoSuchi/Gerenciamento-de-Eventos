@@ -1,3 +1,4 @@
+import { menuGerenciamento, voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
 import { Evento } from "../models/evento";
 import { validacaoData } from "../validation/validData";
@@ -13,9 +14,11 @@ export async function inserirEvento(evento: Evento): Promise<void> {
     `
     try {
         await db.run(query, [evento.nome, evento.data, evento.usuarioResponsavel, evento.id])
-        console.log(`Evento registrado.`);
+        console.log(`\nEvento registrado.\n`);
+        menuGerenciamento()
     } catch (err) {
         console.log(`Erro ao registrar o evento: ${err}`);
+        menuGerenciamento()
     } finally {
         await db.close();
     }

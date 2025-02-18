@@ -1,3 +1,4 @@
+import { menuGerenciamento, voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
 import { idUserLogado } from "../validation/validLogin";
 
@@ -31,16 +32,26 @@ export async function listarUsuariosOuEventos(tabela: 'eventos' | 'usuarios'): P
 }
 
 // Para usuário
-export async function listarEventoPorUser(id: number = idUserLogado): Promise<void> {
+export async function listarEventoPorUserLogado(id: number = idUserLogado): Promise<void> {
     const db = await conectandoAoBanco()
 
     const query = `SELECT * FROM eventos WHERE usuario_id = ?`;
 
     try {
-        await db.all(query, [id])
-        console.log("Esses são todos eventos que você possuí.");
+        const result = await db.all(query, [id])
+
+        console.log("\n------ Esses são todos os seus eventos ------\n");
+        
+        if (result.length > 0) {
+            result.forEach((evento, index) => {
+                console.log(`${index + 1} - Evento: ${evento.nome} \n    Data: ${evento.data}`);
+            });
+        }
+        console.log('---------------------------------------------');
+        voltar()
     } catch (erro) {
         console.log("Erro ao listar eventos: ", erro);
+        menuGerenciamento()
     } finally {
         await db.close()
     }

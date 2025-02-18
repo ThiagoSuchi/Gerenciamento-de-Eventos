@@ -1,3 +1,4 @@
+import { menuGerenciamento, voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
 
 // Para admin
@@ -55,4 +56,34 @@ export async function listarUserOuEventoPorID(tabela: 'eventos' | 'usuarios', id
 }
 
 // Para usuário
-// export async function listarEventoPorId()
+export async function listarEventoPorNome(nome: string): Promise<void> {
+    const db = await conectandoAoBanco()
+
+    const evento = `
+        SELECT e.nome, e.data
+        FROM eventos e
+        INNER JOIN usuarios u on e.usuario_id = u.id
+        WHERE e.nome = ?
+    `
+
+    try {
+        const result = await db.all(evento, [nome])
+
+        if(result) {
+            console.log('-----------------------------------------------');
+            result.forEach((evento, index) => {
+                console.log(`${index + 1} Evento: ${evento.nome}\n  Data: ${evento.data}`);
+            })
+            console.log('-----------------------------------------------\n');
+            voltar()
+        } else {
+            console.log("Evento não encontrado!");
+            voltar()
+        }
+    } catch (err) {
+        console.log("Erro ao fazer a busca do evento: ", err);
+        menuGerenciamento()
+    } finally {
+        db.close()
+    }
+}

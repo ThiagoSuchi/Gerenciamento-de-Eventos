@@ -3,8 +3,8 @@ import { deletarUserOuEvento } from "./services/deletar";
 import { deletarTabela } from "./services/deletarTabelas";
 import { alterEvento } from "./services/editarEvento";
 import { alterUsuario } from "./services/editarUsuario";
-import { listarUserOuEventoPorID } from "./services/listarPorID";
-import { listarUsuariosOuEventos } from "./services/listarTodos";
+import { listarEventoPorNome, listarUserOuEventoPorID } from "./services/listarPorID";
+import { listarEventoPorUserLogado, listarUsuariosOuEventos } from "./services/listarTodos";
 import { cadastrarUsuario } from "./utils/cadastrarUsuario";
 import { registrarEventos } from "./utils/registrarEvento";
 import { validLogin } from "./validation/validLogin";
@@ -20,7 +20,7 @@ async function pergunta(prgnt: string): Promise<string> {
 }
 
 async function menuLoginOuRegistra() {
-    console.log("Olá, para prosseguir faça seu login.");
+    console.log("---- OLÁ, PARA PROSSEGUIR FAÇA SEU LOGIN OU CADASTRE-SE ----");
     console.log("[1] Cadastrar");
     console.log("[2] Login");
 
@@ -31,41 +31,66 @@ async function menuLoginOuRegistra() {
         const email = await pergunta("Digite seu e-mail: ");
         const senha = await pergunta("Digite sua senha: ");
         cadastrarUsuario(nome, email, senha)
-        console.log(`Login realizado com sucesso! seja bem vindo(a) ${nome}.`);
-        listaGerenciamento()
+        console.log(`\n ------- Cadastro realizado com sucesso! seja bem vindo(a) ${nome} ------- \n`);
+        menuGerenciamento()
 
     } else if (opcao === "2") {
         const nome = await pergunta("Digite seu nome: ");
         const senha = await pergunta("Digite sua senha: ");
         validLogin(nome, senha)
-        console.log(`\n ------- Login realizado com sucesso! seja bem vindo(a) ${nome} ------- \n`);
-        listaGerenciamento()
+        console.log(`\n ------- Login realizado com sucesso! Bem vindo(a) de volta ${nome} ------- \n`);
+        menuGerenciamento()
 
     } else {
-        console.log("Opção inválida!");
+        console.log("\n!!!!Opção inválida!!!!\n");
+        menuLoginOuRegistra()
     }
 }
 
 // Lista de gerenciamento para o tipo Usuário
-async function listaGerenciamento() {
+export async function menuGerenciamento() {
     console.log("Aqui você gerencia seus eventos: ");
     console.log("[1] Registrar evento ");
-    console.log("[2] Deletar evento ");
-    console.log("[3] Listar todos os eventos ");
-    console.log("[4] Buscar evento ");
-    console.log("[5] Editar evento ");
+    console.log("[2] Listar todos os eventos ");
+    console.log("[3] Buscar evento ");
+    console.log("[4] Editar evento ");
+    console.log("[5] Deletar evento ");
     console.log("[6] Editar meu perfil ");
-    const opcao = await pergunta("Oque deseja fazer? ")
+    console.log("[7] Sair ");
+    const opcao = await pergunta("\nOque você deseja fazer? ")
 
-    if(opcao === "1") {
+    if (opcao === "1") {
         const nomeEvent = await pergunta("Qual é o evento: ")
         const dataEvent = await pergunta("Qual é a data do evento: ")
         registrarEventos(nomeEvent, dataEvent)
+    } else if (opcao === "2") {
+        await listarEventoPorUserLogado()
+    } else if (opcao === "3") {
+        const nomeEvent = await pergunta("Qual é o evento: ")
+        console.log();
+        await listarEventoPorNome(nomeEvent)
+    }else if (opcao === "4") {
+        await listarEventoPorUserLogado()
+    }else if (opcao === "5") {
+        await listarEventoPorUserLogado()
+    }else if (opcao === "6") {
+        await listarEventoPorUserLogado()
+    }else if (opcao === "7") {
         rl.close()
     }
     
 }
 
+export async function voltar(): Promise<void> {
+    const voltarAoMenu = await pergunta("Voltar?[sim]: ")
+    console.log();
+
+    if(voltarAoMenu === 'Sim' || voltarAoMenu === 'S' || voltarAoMenu === 'sim' || voltarAoMenu === 's' ) {
+        menuGerenciamento()
+    } else {
+        voltar()
+    }
+}
 
 menuLoginOuRegistra()
 

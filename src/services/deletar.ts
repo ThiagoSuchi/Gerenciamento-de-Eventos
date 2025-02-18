@@ -1,5 +1,6 @@
 import { conectandoAoBanco } from "../config/configBD"
 
+// Para admin
 export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: number): Promise<void> {
     const db = await conectandoAoBanco()
 
@@ -53,3 +54,6 @@ export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: nu
         return
     }
 }
+
+// Para usuário
+// export async function deletEvent()

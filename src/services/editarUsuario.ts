@@ -2,6 +2,7 @@ import { conectandoAoBanco } from "../config/configBD";
 import { validacaoUser } from "../validation/validUsuario";
 import { usuarioExistente } from "../utils/verificacao";
 
+// Para admin
 export async function alterUsuario(id: number, nome: string, email: string, senha: string): Promise<void> {
     const db = await conectandoAoBanco()
     const valid = validacaoUser.safeParse({ nome, email, senha });
