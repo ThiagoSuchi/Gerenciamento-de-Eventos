@@ -50,15 +50,19 @@ async function listaGerenciamento() {
     console.log("Aqui você gerencia seus eventos: ");
     console.log("[1] Registrar evento ");
     console.log("[2] Deletar evento ");
-    console.log("[3] Listar eventos ");
-    console.log("[4] Listar evento por ID ");
-    console.log("[5] Alterar evento ");
-    console.log("[6] Editar perfil ");
-    const opcao = await pergunta("Oque deseja faazer? ")
+    console.log("[3] Listar todos os eventos ");
+    console.log("[4] Buscar evento ");
+    console.log("[5] Editar evento ");
+    console.log("[6] Editar meu perfil ");
+    const opcao = await pergunta("Oque deseja fazer? ")
 
     if(opcao === "1") {
-        console.log("blz chegou aqui, agora registre seu evento");
+        const nomeEvent = await pergunta("Qual é o evento: ")
+        const dataEvent = await pergunta("Qual é a data do evento: ")
+        registrarEventos(nomeEvent, dataEvent)
+        rl.close()
     }
+    
 }
 
 

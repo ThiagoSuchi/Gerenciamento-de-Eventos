@@ -1,5 +1,6 @@
 import { conectandoAoBanco } from "../config/configBD";
 
+// Para admin
 export async function listarUserOuEventoPorID(tabela: 'eventos' | 'usuarios', id: number): Promise<void> {
     const db = await conectandoAoBanco()
 
@@ -52,3 +53,6 @@ export async function listarUserOuEventoPorID(tabela: 'eventos' | 'usuarios', id
         return
     }
 }
+
+// Para usuário
+// export async function listarEventoPorId()

@@ -1,8 +1,14 @@
 import { conectandoAoBanco } from "../config/configBD";
 
+export let idUserLogado: number;
+
 async function buscarUser(nome: string) {
     const db = await conectandoAoBanco()
-    return db.get(`SELECT * FROM usuarios WHERE nome = ?`, nome)
+    const query = `SELECT * FROM usuarios WHERE nome = ?`
+    const result = await db.get(query, [nome])
+
+    idUserLogado = result.id
+    return result;
 }
 
 export async function validLogin(nome: string, senha: string): Promise<boolean> {
