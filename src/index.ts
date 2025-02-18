@@ -19,7 +19,7 @@ async function pergunta(prgnt: string): Promise<string> {
     return new Promise((resolve) => rl.question(prgnt, resolve));
 }
 
-async function menuLoginRegistra() {
+async function menuLoginOuRegistra() {
     console.log("Olá, para prosseguir faça seu login.");
     console.log("[1] Cadastrar");
     console.log("[2] Login");
@@ -46,6 +46,7 @@ async function menuLoginRegistra() {
     }
 }
 
+// Lista de gerenciamento para o tipo Usuário
 async function listaGerenciamento() {
     console.log("Aqui você gerencia seus eventos: ");
     console.log("[1] Registrar evento ");
@@ -66,7 +67,7 @@ async function listaGerenciamento() {
 }
 
 
-menuLoginRegistra()
+menuLoginOuRegistra()
 
 // criarTabelas();
 // registrarEventos('Festival Literário Dom Bosco', '19/03/2025', 1)
