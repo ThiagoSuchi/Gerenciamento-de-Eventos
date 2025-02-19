@@ -1,5 +1,6 @@
 import { menuGerenciamento, voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
+import { idUserLogado } from "../validation/validLogin";
 
 // Para admin
 export async function listarUserOuEventoPorID(tabela: 'eventos' | 'usuarios', id: number): Promise<void> {
@@ -55,7 +56,7 @@ export async function listarUserOuEventoPorID(tabela: 'eventos' | 'usuarios', id
     }
 }
 
-// Para usuário
+// Para usuário, buscar evento
 export async function listarEventoPorNome(nome: string): Promise<void> {
     const db = await conectandoAoBanco()
 
@@ -85,5 +86,23 @@ export async function listarEventoPorNome(nome: string): Promise<void> {
         menuGerenciamento()
     } finally {
         db.close()
+    }
+}
+
+// Para usuário, ver perfil
+export async function listarPerfil(id: number = idUserLogado): Promise<void> {
+    const db = await conectandoAoBanco()
+
+    const query = `
+        SELECT nome, email, senha
+        FROM usuarios
+        WHERE id = ?
+    `
+
+    try {
+        const conta = await db.get(query, [id])
+        console.log(`\n Meu perfil: \n1. Nome: ${conta.nome}\n2. E-mail: ${conta.email}\n3. Senha: ${conta.senha}`);
+    } catch (erro) {
+        console.log("Não foi possível abrir seu perfil: ", erro);
     }
 }

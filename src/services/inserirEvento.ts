@@ -13,7 +13,7 @@ export async function inserirEvento(evento: Evento): Promise<void> {
         VALUES (?,?,?)
     `
     try {
-        await db.run(query, [evento.nome, evento.data, evento.usuarioResponsavel, evento.id])
+        await db.run(query, [evento.nome.trim(), evento.data.trim(), evento.usuarioResponsavel, evento.id])
         console.log(`\nEvento registrado.\n`);
         menuGerenciamento()
     } catch (err) {

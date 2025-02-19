@@ -1,3 +1,4 @@
+import { menuGerenciamento, voltar } from ".."
 import { conectandoAoBanco } from "../config/configBD"
 
 // Para admin
@@ -56,4 +57,28 @@ export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: nu
 }
 
 // Para usuário
-// export async function deletEvent()
+export async function deletarEvento(id: number): Promise<void> {
+    const db = await conectandoAoBanco()
+
+    const deletEvent = `
+        DELETE FROM eventos
+        WHERE id = ?
+    `
+
+    try {
+        const result = await db.run(deletEvent, [id])
+        
+        if(!result) {
+            console.error("\nEsse evento não existe.\n");
+            menuGerenciamento()
+        }
+        console.log("\nEvento deletado com sucesso.\n");
+        menuGerenciamento()
+        
+    } catch (err) {
+        console.log("Erro ao tentar deletar evento: ", err);
+        menuGerenciamento()
+    } finally {
+        await db.close()
+    }
+}

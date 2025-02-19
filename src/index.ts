@@ -1,13 +1,13 @@
 import { criarTabelas } from "./services/criarTabelas";
-import { deletarUserOuEvento } from "./services/deletar";
+import { deletarEvento, deletarUserOuEvento } from "./services/deletar";
 import { deletarTabela } from "./services/deletarTabelas";
 import { alterEvento } from "./services/editarEvento";
 import { alterUsuario } from "./services/editarUsuario";
-import { listarEventoPorNome, listarUserOuEventoPorID } from "./services/listarPorID";
+import { listarEventoPorNome, listarPerfil, listarUserOuEventoPorID } from "./services/listarPorID";
 import { listarEventoPorUserLogado, listarUsuariosOuEventos } from "./services/listarTodos";
 import { cadastrarUsuario } from "./utils/cadastrarUsuario";
 import { registrarEventos } from "./utils/registrarEvento";
-import { validLogin } from "./validation/validLogin";
+import { idUserLogado, validLogin } from "./validation/validLogin";
 import readline from "readline";
 
 const rl = readline.createInterface({
@@ -63,29 +63,76 @@ export async function menuGerenciamento() {
         const nomeEvent = await pergunta("Qual é o evento: ")
         const dataEvent = await pergunta("Qual é a data do evento: ")
         registrarEventos(nomeEvent, dataEvent)
+
     } else if (opcao === "2") {
         await listarEventoPorUserLogado()
+        voltar()
+
     } else if (opcao === "3") {
         const nomeEvent = await pergunta("Qual é o evento: ")
         console.log();
         await listarEventoPorNome(nomeEvent)
-    }else if (opcao === "4") {
-        await listarEventoPorUserLogado()
-    }else if (opcao === "5") {
-        await listarEventoPorUserLogado()
-    }else if (opcao === "6") {
-        await listarEventoPorUserLogado()
-    }else if (opcao === "7") {
+
+    } else if (opcao === "4") {
+        const eventos = await listarEventoPorUserLogado()
+
+        const opcao = await pergunta("Escolha um evento para alterar: ")
+        const nome = await pergunta("Deseja mudar o nome? ")
+        const data = await pergunta("Deseja mudar a data? ")
+
+        const index = parseInt(opcao) - 1
+
+        let eventoIndex = eventos[index]
+        let idEvent = eventoIndex.id
+
+        alterEvento(idEvent, nome, data)
+
+    } else if (opcao === "5") {
+        const eventos = await listarEventoPorUserLogado()
+        const opcao = await pergunta("Escolha um evento para deletar: ")
+        const questionario = await pergunta("Você tem certeza que deseja deletar?[sim/não] ")
+
+        let index = parseInt(opcao) - 1; // Transforma a valor(string) passada no terminal em number
+
+        let eventoIndex = eventos[index]; // Pega o valor da posição na lista de eventos de acordo com o index passado
+        const idEvent = eventoIndex.id
+
+        if(questionario === "sim") {
+            deletarEvento(idEvent)
+        } else if (questionario === "não") {
+            menuGerenciamento()
+        } else {
+            console.error('\n!!!Opção inválida: Porfavor responda com [sim/não]!!!\n');
+            menuGerenciamento()
+        }
+
+    } else if (opcao === "6") {
+        await listarPerfil()
+        const opcao = await pergunta("\nEditar?[sim/não] ")
+
+        if(opcao === "sim") {
+            const nome = await pergunta("Nome: ");
+            const email = await pergunta("E-mail: ");
+            const senha = await pergunta("Senha: ")
+            alterUsuario(idUserLogado, nome, email, senha)
+        } else if (opcao === "não") {
+            voltar()
+        } else {
+            console.error("Opção inválida: Porfavor digite [sim/não]\n");
+            menuGerenciamento()
+        }
+
+    } else if (opcao === "7") {
         rl.close()
     }
-    
+
 }
 
 export async function voltar(): Promise<void> {
     const voltarAoMenu = await pergunta("Voltar?[sim]: ")
     console.log();
 
-    if(voltarAoMenu === 'Sim' || voltarAoMenu === 'S' || voltarAoMenu === 'sim' || voltarAoMenu === 's' ) {
+    if (voltarAoMenu === 'Sim' || voltarAoMenu === 'S' || voltarAoMenu === 'sim' || voltarAoMenu === 's') {
         menuGerenciamento()
     } else {
         voltar()

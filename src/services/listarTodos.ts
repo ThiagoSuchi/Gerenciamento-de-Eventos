@@ -3,7 +3,7 @@ import { conectandoAoBanco } from "../config/configBD";
 import { idUserLogado } from "../validation/validLogin";
 
 // Para admin
-export async function listarUsuariosOuEventos(tabela: 'eventos' | 'usuarios'): Promise<void> {
+export async function listarUsuariosOuEventos(tabela: 'eventos' | 'usuarios'): Promise<any> {
     const db = await conectandoAoBanco()
 
     const listUsers = `SELECT * FROM usuarios`;
@@ -32,7 +32,7 @@ export async function listarUsuariosOuEventos(tabela: 'eventos' | 'usuarios'): P
 }
 
 // Para usuário
-export async function listarEventoPorUserLogado(id: number = idUserLogado): Promise<void> {
+export async function listarEventoPorUserLogado(id: number = idUserLogado): Promise<any> {
     const db = await conectandoAoBanco()
 
     const query = `SELECT * FROM eventos WHERE usuario_id = ?`;
@@ -44,11 +44,11 @@ export async function listarEventoPorUserLogado(id: number = idUserLogado): Prom
         
         if (result.length > 0) {
             result.forEach((evento, index) => {
-                console.log(`${index + 1} - Evento: ${evento.nome} \n    Data: ${evento.data}`);
+                console.log(`${index + 1} - Evento: ${evento.nome} \n    Data: ${evento.data}\n`);
             });
         }
         console.log('---------------------------------------------');
-        voltar()
+        return result
     } catch (erro) {
         console.log("Erro ao listar eventos: ", erro);
         menuGerenciamento()
