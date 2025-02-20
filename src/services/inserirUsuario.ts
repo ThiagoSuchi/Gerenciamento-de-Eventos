@@ -7,7 +7,7 @@ import { idUserLogado } from "../validation/validLogin";
 
 
 export async function inserirUsuario(usuario: Usuarios): Promise<void> {
-    const {id, nome, email, senha} = usuario;
+    const {nome, email, senha} = usuario;
     const valid = validacaoUser.safeParse({nome, email, senha});
     const db = await conectandoAoBanco();
 
@@ -26,9 +26,9 @@ export async function inserirUsuario(usuario: Usuarios): Promise<void> {
         VALUES (?,?,?)
     `
     try {
-        await db.run(query, [usuario.nome.trim(), usuario.email.trim(), usuario.senha.trim(), usuario.id])
+        const result = await db.run(query, [usuario.nome.trim(), usuario.email.trim(), usuario.senha.trim(), usuario.id])
 
-        UsuarioLog.registrarLog(idUserLogado, id, "Usuários", "INSERT")   
+        UsuarioLog.registrarLog(result.lastID, idUserLogado, "Usuários", "INSERT")   
     } catch (err) {
         console.log(`Erro ao cadastrar um novo usuário: ${err}`);
     } finally {

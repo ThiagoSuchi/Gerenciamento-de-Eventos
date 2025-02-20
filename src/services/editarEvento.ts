@@ -1,6 +1,7 @@
-import { voltar } from "..";
+import { menuGerenciamento, voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
 import { UsuarioLog } from "../logs/UsuarioLog";
+import { validacaoData } from "../validation/validData";
 import { idUserLogado } from "../validation/validLogin";
 
 export async function alterEvento(id: number, nome: string, data: string): Promise<void> {
@@ -10,7 +11,9 @@ export async function alterEvento(id: number, nome: string, data: string): Promi
     const eventAtual = await db.get(selectInfo, [id])
 
     const novoNome = nome.trim() !== "" ? nome : eventAtual.nome;
-    const novaData = nome.trim() !== "" ? data : eventAtual.data;
+    const novaData = data.trim() !== "" ? data : eventAtual.data;
+
+    if(!validacaoData(novaData) && data !== "") return
 
     const query = `
         UPDATE eventos
@@ -19,6 +22,12 @@ export async function alterEvento(id: number, nome: string, data: string): Promi
    `;
 
     try {
+        if(novoNome === "" && novaData === ""){
+            console.log('Nenhuma alteração foi feita em seus eventos');
+            menuGerenciamento()
+            return
+        }
+
         const result = await db.run(query, [novoNome, novaData, id])
         
         if (result.changes === 0) {

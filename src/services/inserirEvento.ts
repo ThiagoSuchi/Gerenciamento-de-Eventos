@@ -15,13 +15,13 @@ export async function inserirEvento(evento: Evento): Promise<void> {
         VALUES (?,?,?)
     `
     try {
-        await db.run(query, [evento.nome.trim(), evento.data.trim(), evento.usuarioResponsavel, evento.id])
+        const result = await db.run(query, [evento.nome.trim(), evento.data.trim(), evento.usuarioResponsavel, evento.id])
 
-        UsuarioLog.registrarLog(idUserLogado, evento.id, "Eventos", "INSERT")
+        UsuarioLog.registrarLog(idUserLogado, result.lastID, "Eventos", "INSERT")
         console.log(`\nEvento registrado.\n`);
         menuGerenciamento()
     } catch (err) {
-        console.log(`Erro ao registrar o evento: ${err}`);
+        console.error(`\nErro ao registrar o evento: ${err}\n`);
         menuGerenciamento()
     } finally {
         await db.close();

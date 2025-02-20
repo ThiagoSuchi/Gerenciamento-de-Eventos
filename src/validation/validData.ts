@@ -1,8 +1,11 @@
+import { menuGerenciamento } from "..";
+
 export function validacaoData(data: string): string | boolean {
     const partes = data.split("/");
 
     if(partes.length !== 3){
-        console.log('Formato de data inválida! Use: DD/MM/AAAA')
+        console.error('\nFormato de data inválida! Use: DD/MM/AAAA\n')
+        menuGerenciamento()
         return false
     }
 
@@ -12,7 +15,8 @@ export function validacaoData(data: string): string | boolean {
 
     const dataFormat = new Date(ano, mes, dia);
     if(dataFormat.getDate() !== dia || dataFormat.getMonth() !== mes || dataFormat.getFullYear() !== ano) {
-        console.log('Data inválida! A data fornecida não existe.')
+        console.error('\nData inválida! A data fornecida não existe.\n')
+        menuGerenciamento()
         return false
     }
 

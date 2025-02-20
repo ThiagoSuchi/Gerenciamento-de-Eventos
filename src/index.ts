@@ -33,9 +33,9 @@ async function menuLoginOuRegistra() {
         const email = await pergunta("Digite seu e-mail: ");
         const senha = await pergunta("Digite sua senha: ");
         cadastrarUsuario(nome, email, senha)
-        console.log(`\n ------- Cadastro realizado com sucesso! seja bem vindo(a) ${nome} ------- \n`);
-        menuGerenciamento()
-
+        console.log(`\n ------- Cadastro realizado com sucesso! Seja bem vindo(a) ${nome}, Reinicie o sistema e faça login ------- \n`);
+        rl.close()
+        
     } else if (opcao === "2") {
         const nome = await pergunta("Digite seu nome: ");
         const senha = await pergunta("Digite sua senha: ");
@@ -147,7 +147,7 @@ menuLoginOuRegistra()
 // criarTabelas();
 // registrarEventos('Festival Literário Dom Bosco', '19/03/2025', 1)
 // deletarUserOuEvento('eventos', 3)
-// deletarTabela('logs');
+// deletarTabela('eventos');
 // listarUsuariosOuEventos("eventos");
 // listarUserOuEventoPorID("eventos", 2)
 
