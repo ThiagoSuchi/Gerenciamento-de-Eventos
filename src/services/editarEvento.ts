@@ -1,5 +1,7 @@
 import { voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
+import { UsuarioLog } from "../logs/UsuarioLog";
+import { idUserLogado } from "../validation/validLogin";
 
 export async function alterEvento(id: number, nome: string, data: string): Promise<void> {
     const db = await conectandoAoBanco()
@@ -24,6 +26,7 @@ export async function alterEvento(id: number, nome: string, data: string): Promi
             return;
         }
 
+        UsuarioLog.registrarLog(idUserLogado, id, "Eventos", "UPDATE")
         console.log(`Evento alterado com sucesso.`);
         voltar()
     } catch (erro) {

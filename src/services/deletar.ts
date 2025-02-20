@@ -1,5 +1,7 @@
 import { menuGerenciamento, voltar } from ".."
 import { conectandoAoBanco } from "../config/configBD"
+import { UsuarioLog } from "../logs/UsuarioLog"
+import { idUserLogado } from "../validation/validLogin"
 
 // Para admin
 export async function deletarUserOuEvento(tabela: 'eventos' | 'usuarios', id: number): Promise<void> {
@@ -72,6 +74,8 @@ export async function deletarEvento(id: number): Promise<void> {
             console.error("\nEsse evento não existe.\n");
             menuGerenciamento()
         }
+
+        UsuarioLog.registrarLog(idUserLogado, id, 'Eventos', 'DELETE');
         console.log("\nEvento deletado com sucesso.\n");
         menuGerenciamento()
         

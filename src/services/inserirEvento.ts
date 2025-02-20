@@ -1,7 +1,9 @@
 import { menuGerenciamento, voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
+import { UsuarioLog } from "../logs/UsuarioLog";
 import { Evento } from "../models/evento";
 import { validacaoData } from "../validation/validData";
+import { idUserLogado } from "../validation/validLogin";
 
 export async function inserirEvento(evento: Evento): Promise<void> {
     const db = await conectandoAoBanco();
@@ -14,6 +16,8 @@ export async function inserirEvento(evento: Evento): Promise<void> {
     `
     try {
         await db.run(query, [evento.nome.trim(), evento.data.trim(), evento.usuarioResponsavel, evento.id])
+
+        UsuarioLog.registrarLog(idUserLogado, evento.id, "Eventos", "INSERT")
         console.log(`\nEvento registrado.\n`);
         menuGerenciamento()
     } catch (err) {

@@ -1,4 +1,5 @@
 import { conectandoAoBanco } from "../config/configBD";
+import { UsuarioLog } from "../logs/UsuarioLog";
 
 export async function criarTabelas(): Promise<void> {
 

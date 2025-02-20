@@ -1,5 +1,6 @@
 import { menuGerenciamento, voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
+import { UsuarioLog } from "../logs/UsuarioLog";
 import { idUserLogado } from "../validation/validLogin";
 
 // Para admin
@@ -101,6 +102,7 @@ export async function listarPerfil(id: number = idUserLogado): Promise<void> {
 
     try {
         const conta = await db.get(query, [id])
+
         console.log(`\n Meu perfil: \n1. Nome: ${conta.nome}\n2. E-mail: ${conta.email}\n3. Senha: ${conta.senha}`);
     } catch (erro) {
         console.log("Não foi possível abrir seu perfil: ", erro);

@@ -1,4 +1,4 @@
-import { menuGerenciamento, voltar } from "..";
+import { menuGerenciamento } from "..";
 import { conectandoAoBanco } from "../config/configBD";
 import { idUserLogado } from "../validation/validLogin";
 

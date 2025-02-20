@@ -1,5 +1,7 @@
 import { voltar } from "..";
 import { conectandoAoBanco } from "../config/configBD";
+import { UsuarioLog } from "../logs/UsuarioLog";
+import { idUserLogado } from "../validation/validLogin";
 import { validacaoUser } from "../validation/validUsuario";
 
 export async function alterUsuario(id: number, nome: string, email: string, senha: string): Promise<void> {
@@ -27,7 +29,8 @@ export async function alterUsuario(id: number, nome: string, email: string, senh
 
     try {
         await db.run(query, [novoNome.trim(), novoEmail.trim(), novaSenha.trim(), id])
-
+        
+        UsuarioLog.registrarLog(idUserLogado, id, "Usuários", "UPDATE")
         console.log(`Perfil alterado com sucesso.`);
         voltar()
     } catch (erro) {

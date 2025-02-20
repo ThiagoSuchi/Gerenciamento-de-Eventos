@@ -10,6 +10,7 @@ import { registrarEventos } from "./utils/registrarEvento";
 import { idUserLogado, validLogin } from "./validation/validLogin";
 import readline from "readline";
 
+/* ----------------------- Para Usuário -----------------------  */
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -18,6 +19,7 @@ const rl = readline.createInterface({
 async function pergunta(prgnt: string): Promise<string> {
     return new Promise((resolve) => rl.question(prgnt, resolve));
 }
+
 
 async function menuLoginOuRegistra() {
     console.log("---- OLÁ, PARA PROSSEGUIR FAÇA SEU LOGIN OU CADASTRE-SE ----");
@@ -141,12 +143,12 @@ export async function voltar(): Promise<void> {
 
 menuLoginOuRegistra()
 
+/* ----------------------- Para admin -----------------------  */
 // criarTabelas();
 // registrarEventos('Festival Literário Dom Bosco', '19/03/2025', 1)
 // deletarUserOuEvento('eventos', 3)
 // deletarTabela('logs');
 // listarUsuariosOuEventos("eventos");
 // listarUserOuEventoPorID("eventos", 2)
-// alterUsuario(1, 'Gabriel Almeida', 'almeida@gmail.com', 'gabigol33445566@');
-// alterEvento(1, 'Festa Junina', '21/10/2025')
+
 
