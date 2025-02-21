@@ -1,6 +1,3 @@
-Usuário ID: 1
-Ação: UPDATE
-Tabela: Eventos
-Tabela ID: 1
-Data/Hora: 2025-02-20T21:45:22.357Z
-
+Usuário ID: 1 | Ação: DELETE | Tabela: Eventos | Tabela ID: 1 | Data/Hora: 2025-02-21T14:26:22.183Z
+Usuário ID: 1 | Ação: INSERT | Tabela: Eventos | Tabela ID: 2 | Data/Hora: 2025-02-21T14:30:04.069Z
+Usuário ID: 1 | Ação: UPDATE | Tabela: Eventos | Tabela ID: 2 | Data/Hora: 2025-02-21T14:31:10.194Z
